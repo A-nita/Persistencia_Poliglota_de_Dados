@@ -1,9 +1,20 @@
 services:
   redis:
-    image: redis:6.0.7
+    image: redis
     container_name: redis
     restart: always
     volumes:
-      - ./data:/data
+      - ./data/redis:/data
     ports:
       - 6379:6379
+  neo4j:
+    image: neo4j
+    container_name: neo4j
+    restart: always
+    volumes:
+      - ./data/neo4j:/data
+    environment:
+      - NEO4J_AUTH=none
+    ports:
+      - 7474:7474
+      - 7687:7687
