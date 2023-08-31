@@ -27,8 +27,8 @@ def generate_recommendations():
             recomendations[rec['target_user']] = []
             
         recomendations[rec['target_user']].append({
-            'recomended_anime_id': rec['recomended_anime_id'],
-            'recomended_anime_name': rec['recomended_anime_name']
+            'id': rec['recomended_anime_id'],
+            'name': rec['recomended_anime_name']
         })
     
     return recomendations
