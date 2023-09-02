@@ -1,5 +1,4 @@
 from py2neo import Graph
-from tqdm import tqdm
 
 graph = Graph("bolt://localhost:7687", auth=("neo4j", "password"))
 
@@ -20,10 +19,15 @@ def generate_recommendations():
 
     results_list = results.data()
 
-    recomendations = {}
+    recomendations = {}  # {<user_id>: [<rec1>, <rec2>, <rec3>]}
 
+    # Cada rec será um registro contendo:
+    # target_user: id do usuário que recebeu as recomendações
+    # recomended_anime_id, recomended_anime_name e recomended_anime_img: dados sobre o anime recomendado
     for rec in results_list:
-        if rec['target_user'] not in recomendations:
+        if rec['target_user'] not in recomendations:  
+            # Se o usuário ainda não recebeu nenhuma recomendação (primeira vez que aparece como "target_user")
+            # então inicializar sua lista de recomendações (inicialmente vazia)
             recomendations[rec['target_user']] = []
             
         recomendations[rec['target_user']].append({
