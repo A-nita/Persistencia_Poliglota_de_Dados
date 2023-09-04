@@ -9,6 +9,7 @@ def generate_recommendations():
     CALL {
         WITH user
         MATCH (user) -[user2Ratings:Rating]-> (likedUser2Animes: Anime) -[similarities:Similar]-> (similarAnimes:Anime)
+        WHERE NOT (user) -[:Rating]-> (similarAnimes)
         RETURN similarAnimes.anime_id AS recomended_anime_id, similarAnimes.name AS recomended_anime_name, similarAnimes.img AS recomended_anime_img, SUM(similarities.gosteis) AS gosteis
         ORDER BY gosteis DESC
         LIMIT 3
@@ -35,6 +36,6 @@ def generate_recommendations():
             'name': rec['recomended_anime_name'],
             'img': rec['recomended_anime_img']
         })
-    
+
     return recomendations
 
